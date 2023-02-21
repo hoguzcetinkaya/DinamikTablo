@@ -5,7 +5,7 @@ Veri tabanı bağlantısı için Web.config dosyasından ConnectionString alanı
 
 Sütunların yer değiştirmesi eksik.
 
-Sütun gizlenmesi istenildiği gibi çalışmamaktadır. Sütun adına tıklandığında geçici olarak sayfa yenilene kadar gizleme işlemi yapıyor.
+Sütun gizlenmesi istenildiği gibi çalışmamaktadır. Sütun adına tıklandığında geçici olarak sayfa yenilenene kadar gizleme işlemi yapıyor.
 
 Verilerin güncellenme alanında kayıtlı veriler inputlara gelmektedir fakat güncellenecek alanın adı yazmamaktadır.
 
