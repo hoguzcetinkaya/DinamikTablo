@@ -1,0 +1,12 @@
+table{
+    margin-top: 50px;
+}
+table thead tr{
+    text-align: center;
+}
+table tr td {
+    height: 40px;
+    text-align: center;
+}
+
+

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<BtyonFramework.Models.ColumsModel>
+@{
+    ViewBag.Title = "FormView";
+}
+<div style="margin-top:30px;"></div>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@if (Model.Count() != 0)
+{
+    if (ViewBag.Row != null)
+    {
+        using (Html.BeginForm("RowUpdate", "Table", FormMethod.Post))
+        {
+            foreach (var item in ViewBag.Row as IEnumerable<BtyonFramework.Models.DataModel>)
+            {
+
+                int parcaSayac = 0;
+                string[] parcalanmis = item.Data.Split(' ');
+
+                <!--Foreach içerisind sayaç sütun sayısından küçük ya da eşit olduğu sürece satıra veri eklemesini gerçekleştiriyorum
+                    eğer ki sayaç satırdan fazla olursa tabloda taşma yaptığından ötürü bunu yapmamasını sağlıyor-->
+                foreach (var parca in parcalanmis)
+                {
+                    parcaSayac++;
+                    if (parcaSayac <= Model.Count())
+                    {
+                        <div class="row" style="margin-bottom:10px;">
+                            <div class="col-md-2">
+                                <label>Sütun isimleri</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="data" value="@parca" placeholder="@parca"/><br />
+                            </div>
+                            <div class="col-md-12"></div>
+                        </div>
+                    }
+
+                }
+                parcaSayac++;
+
+                if (parcaSayac <= Model.Count())
+                {
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-md-2">
+                            <label>Sütun isimleri</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" name="data" value="" /><br />
+                        </div>
+                        <div class="col-md-12"></div>
+                    </div>
+                }
+            }
+            <button class="btn btn-success">Save</button>
+        }
+    }
+    else
+    {
+        using (Html.BeginForm("DataAdd", "Table", FormMethod.Post))
+        {
+            foreach (var item in Model)
+            {
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-md-2">
+                        <label>@item.ColumsName :</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="data" value="" /><br />
+                    </div>
+                </div>
+
+            }
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-success">Save</button>
+                </div>
+            </div>
+
+        }
+    }
+
+
+}
+
+

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<BtyonFramework.Models.LogModel>
+@{
+    ViewBag.Title = "SystemLogs";
+}
+
+<ul style="list-style-type:none;">
+    @foreach (var item in Model)
+    {
+        <li>@item.Log</li>
+
+    }
+</ul>
+

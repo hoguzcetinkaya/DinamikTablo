@@ -1,0 +1,89 @@
+﻿@model IEnumerable<BtyonFramework.Models.ColumsModel>
+@{
+    ViewBag.Title = "TableView";
+}
+<a href="/Table/FormView" class="btn btn-success">New</a>
+<table class="table" border="1" id="tablo">
+    <thead>
+        <tr>
+            <!--Colums tablosundan gelen datalara göre sütun oluşturma işlemi-->
+            <th>Commands</th>
+            <th>Id</th>
+            @foreach (var item in Model)
+            {
+                <th style="text-align:center;" onclick="hideColumn(this.cellIndex)">@item.ColumsName</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{ int RowSayac = 0;}
+        <!--Bu foreach ile controller'da elde ettiğimiz Datas tablosundan gelen verilere sırayla erişmemizi sağlıyor
+            her bir satırdaki veri için özel işleme tabi tutuyoruz yani-->
+        @foreach (var item in ViewBag.Datas as IEnumerable<BtyonFramework.Models.DataModel>)
+        {
+            RowSayac++;
+            <!--sayaç kullanmamdaki amaç sütun sayısına göre tabloda sınırlama yapmak
+                yani dataları tutma biçimimde silinen sütunun verileri de tutulmakta.
+                Bu yüzden sütun sayısı ile sayaç arasında bir kontrol sağlıyorum
+                sayaç<=SütunSayısı olduğu sürece satıra sütun eklemesi yapıyorum-->
+            int sayac = 0;
+            <!--veritabanında verileri tek bir satır üzerinde tuttum ve aralarında parçalayabilmek için boşluk bıraktım
+                burada o verilerin tablodaki satırlarda yazıbilmesi için bir nevi liste haline getiriyoruz-->
+            string[] parcalanmis = item.Data.Split(' ');
+            <tr>
+                <td width="200px">
+                    @Html.ActionLink("Update", "RowUpdate", "Table", new { id = item.Id }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Delete", "RowDelete", "Table", new { id = item.Id }, new { @class = "btn btn-success" })
+                </td>
+                <td>
+                    @item.Id
+                </td>
+                <!--Sütun sayısı kadar bir döngüye sokuyorum ki satırlara veri girebileyim ve ayrıca boş kalan satırlara da boş ifadesi atabileyim-->
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    <!--Foreach içerisind sayaç sütun sayısından küçük ya da eşit olduğu sürece satıra veri eklemesini gerçekleştiriyorum
+                        eğer ki sayaç satırdan fazla olursa tabloda taşma yaptığından ötürü bunu yapmamasını sağlıyor-->
+                    foreach (var parca in parcalanmis)
+                    {
+                        sayac++;
+                        if (sayac <= Model.Count())
+                        {
+                            <td>@parca</td>
+                        }
+
+                    }
+                    <!--burada ise gelen datanın parçalanmış halini ifade eden sayaç sütun sayısından az kalmış ise tabloda boşluk olarak gözük-
+                        memesi için yani btyon pdf'inde olduğu gibi gözükmesi için bir işlem uyguladım-->
+                    if (sayac <= Model.Count())
+                    {
+                        while (sayac != Model.Count())
+                        {
+                            <td></td>
+                            sayac++;
+                        }
+                    }
+                    break;
+                }
+
+
+
+
+
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+
+<script>
+    function hideColumn(index) {
+        var table = document.getElementById("tablo");
+        var rows = table.rows;
+
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].cells[index].style.display = "none";
+        }
+    }
+</script>

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BtyonFramework.Models.ColumsModel>
+@{
+    ViewBag.Title = "Index";
+}
+<div style="margin-top:30px;"></div>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@if (Model.Count() == 0)
+{
+    using (Html.BeginForm("ColumAdd", "Table", FormMethod.Post))
+    {
+        <button class="btn btn-success">Add</button>
+        <input type="text" name="colum" />
+
+        <br />
+    }
+
+}
+else
+{
+    foreach (var item in Model)
+    {
+        @Html.ActionLink("Delete", "ColumDelete", "Table", new { id = item.Id }, new { @class = "btn btn-success" })
+        <input type="text" name="colum" value="@item.ColumsName" />
+        <input type="checkbox" name="hide" value="" /><label>Hidden</label>
+        <br />
+    }
+    using (Html.BeginForm("ColumAdd", "Table", FormMethod.Post))
+    {
+        <button class="btn btn-success">Add</button>
+        <input type="text" name="colum" />
+        <br />
+
+    }
+}
