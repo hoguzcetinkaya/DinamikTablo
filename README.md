@@ -1,0 +1,2 @@
+# DinamikTablo
+dinamik tablo uygulaması
